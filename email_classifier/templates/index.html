@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classificador de Emails Inteligente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-envelope"></i> Classificador de Emails IA</h1>
+            <p>Automatize a triagem de emails com inteligência artificial</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" onsubmit="showLoading()">
+            <div class="upload-section">
+                <div class="section-title"><i class="fas fa-file-upload"></i> Enviar arquivo</div>
+                <input type="file" name="file" accept=".txt,.pdf" id="fileInput">
+                <small>Formatos suportados: .txt, .pdf (até 16MB)</small>
+            </div>
+
+            <div class="text-section">
+                <div class="section-title"><i class="fas fa-paste"></i> Ou cole o texto do email</div>
+                <textarea name="email_text" placeholder="Cole o conteúdo do email aqui..." id="emailText"></textarea>
+            </div>
+
+            <button type="submit" class="btn">
+                <i class="fas fa-robot"></i> Classificar Email
+            </button>
+        </form>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="loading-spinner"></div>
+            <p>Processando seu email com IA...</p>
+        </div>
+
+        {% if error %}
+            <div class="error">
+                <strong><i class="fas fa-exclamation-circle"></i> Erro:</strong> {{ error }}
+            </div>
+        {% endif %}
+
+        {% if email %}
+            <div class="result-container">
+                <h3 class="result-title"><i class="fas fa-envelope-open-text"></i> Email analisado:</h3>
+                <div class="email-content">{{ email }}</div>
+                
+                <h3 class="result-title"><i class="fas fa-tag"></i> Categoria:</h3>
+                <div class="category-badge category-{{ categoria.lower() }}">
+                    <i class="fas fa-{% if categoria == 'Produtivo' %}cogs{% else %}heart{% endif %}"></i> {{ categoria }}
+                </div>
+                
+                <h3 class="result-title"><i class="fas fa-reply"></i> Resposta sugerida:</h3>
+                <div class="response-content">{{ resposta }}</div>
+                
+                <button onclick="copyToClipboard()" class="btn" style="margin-top: 20px; background: #48bb78;">
+                    <i class="fas fa-copy"></i> Copiar Resposta
+                </button>
+            </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>Sistema de classificação de emails powered by AI • Desenvolvido para AutoU</p>
+        </div>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        }
+        
+        function copyToClipboard() {
+            const responseContent = document.querySelector('.response-content');
+            const textArea = document.createElement('textarea');
+            textArea.value = responseContent.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            alert('Resposta copiada para a área de transferência!');
+        }
+        
+        // Desabilitar o botão se não houver conteúdo
+        document.getElementById('fileInput').addEventListener('change', toggleSubmit);
+        document.getElementById('emailText').addEventListener('input', toggleSubmit);
+        
+        function toggleSubmit() {
+            const fileInput = document.getElementById('fileInput');
+            const emailText = document.getElementById('emailText');
+            const submitBtn = document.querySelector('.btn');
+            
+            if (fileInput.value || emailText.value.trim()) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = 1;
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = 0.7;
+            }
+        }
+        
+        // Inicializar
+        toggleSubmit();
+    </script>
+</body>
+</html>
