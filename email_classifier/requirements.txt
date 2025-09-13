@@ -1,5 +1,4 @@
-Flask
-PyPDF2
-nltk
-openai
-python-dotenv
+flask
+transformers
+torch
+pdfplumber
