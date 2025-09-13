@@ -1,0 +1,5 @@
+Flask
+PyPDF2
+nltk
+openai
+python-dotenv
