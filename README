@@ -1,0 +1,134 @@
+Classificador de Emails Inteligente
+Sistema de classificação automática de emails usando inteligência artificial para categorizar mensagens como "Produtivo" ou "Improdutivo" e gerar respostas contextualizadas.
+
+📋 Funcionalidades
+📧 Classificação automática de emails em "Produtivo" ou "Improdutivo"
+
+🤖 Geração de respostas contextualizadas usando IA
+
+📁 Suporte a upload de arquivos (TXT e PDF)
+
+📋 Interface web intuitiva e responsiva
+
+⚡ Processamento rápido com modelos de IA
+
+🚀 Pré-requisitos
+Python 3.8 ou superior
+
+pip (gerenciador de pacotes Python)
+
+Chave API da OpenAI (opcional, mas recomendado)
+
+📦 Instalação
+1. Clone o repositório
+bash
+git clone <url-do-repositorio>
+cd email-classifier
+2. Crie um ambiente virtual
+bash
+# No Linux/Mac
+python3 -m venv venv
+source venv/bin/activate
+
+# No Windows
+python -m venv venv
+venv\Scripts\activate
+3. Instale as dependências
+bash
+pip install -r requirements.txt
+4. Configure as variáveis de ambiente
+Copie o arquivo de exemplo:
+
+bash
+cp .env.example .env
+Edite o arquivo .env e adicione sua chave da OpenAI:
+
+text
+OPENAI_API_KEY=sk-sua_chave_openai_aqui
+5. Obtenha uma chave API da OpenAI
+Acesse https://platform.openai.com/
+
+Crie uma conta ou faça login
+
+Vá para "API Keys" e gere uma nova chave
+
+Copie a chave e cole no arquivo .env
+
+🎯 Como executar
+Executar a aplicação
+bash
+python app.py
+A aplicação estará disponível em: http://localhost:5000
+
+Executar testes
+bash
+python test.py
+📁 Estrutura do projeto
+text
+email-classifier/
+├── app.py                 # Aplicação Flask principal
+├── classifier.py          # Lógica de classificação e geração de respostas
+├── file_reader.py         # Leitura de arquivos TXT e PDF
+├── test.py               # Script de testes
+├── requirements.txt      # Dependências do projeto
+├── .env.example         # Exemplo de variáveis de ambiente
+├── .gitignore          # Arquivos ignorados pelo git
+├── templates/
+│   └── index.html      # Template HTML da interface
+└── static/
+    └── css/
+        └── style.css   # Estilos da aplicação
+🧪 Como usar
+Acesse a aplicação em http://localhost:5000
+
+Envie um email de duas formas:
+
+Faça upload de um arquivo (TXT ou PDF)
+
+Cole o texto do email diretamente na caixa de texto
+
+Clique em "Classificar Email"
+
+Visualize os resultados:
+
+Categoria do email (Produtivo/Improdutivo)
+
+Resposta sugerida pela IA
+
+Opção para copiar a resposta
+
+🔧 Configuração avançada
+Sem chave da OpenAI
+O sistema funciona sem a chave da OpenAI, utilizando um sistema de fallback inteligente com respostas pré-definidas contextualizadas.
+
+Modelos de IA alternativos
+Para usar outros modelos, edite o arquivo classifier.py:
+
+python
+# Alterar o modelo de classificação
+classifier = pipeline("zero-shot-classification", 
+                     model="nome-do-modelo-alternativo")
+🐛 Solução de problemas
+Erro de dependências
+Se encontrar erros de instalação:
+
+bash
+# Atualize o pip
+pip install --upgrade pip
+
+# Tente instalar novamente
+pip install -r requirements.txt
+Erro de permissão
+No Windows, se encontrar erro de execução de scripts:
+
+powershell
+# Execute o PowerShell como administrador e digite:
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Problemas com a API da OpenAI
+Se a API da OpenAI não estiver respondendo:
+
+Verifique sua chave API no arquivo .env
+
+Confirme que há créditos disponíveis na sua conta
+
+Verifique sua conexão com a internet
